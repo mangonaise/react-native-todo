@@ -1,8 +1,8 @@
-import { observer } from 'mobx-react-lite';
 import React from 'react';
+import { observer } from 'mobx-react-lite';
 import { useContext } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { AppContext } from '../App';
+import AppContext from '../logic/appContext';
 import Task from './Task';
 
 const TasksContainer = () => {
