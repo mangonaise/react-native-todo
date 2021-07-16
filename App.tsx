@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import NewTaskSection from './components/NewTaskSection';
 import Task from './components/Task';
 
 export default function App() {
@@ -13,6 +14,7 @@ export default function App() {
           <Task text="eat and sleep" />
         </View>
       </View>
+      <NewTaskSection />
     </View>
   );
 }
