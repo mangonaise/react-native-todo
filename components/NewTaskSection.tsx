@@ -1,14 +1,31 @@
 import React from 'react';
-import { KeyboardAvoidingView, Platform, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import AppContext from '../logic/appContext';
+import { useState } from 'react';
+import { useEffect } from 'react';
+import { useContext } from 'react';
+import { Keyboard, KeyboardAvoidingView, Platform, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
 const NewTaskSection = () => {
+  const app = useContext(AppContext);
+  const [taskText, setTaskText] = useState('');
+
+  function addTask() {
+    Keyboard.dismiss();
+    app.addTask(taskText);
+    setTaskText('');
+  }
+
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={styles.newTaskContainer}>
-      <TextInput style={styles.newTaskInput} placeholder="New task" />
-      <TouchableOpacity>
-        <View style={styles.addTaskButton}>
+      <TextInput 
+        style={styles.newTaskInput} 
+        placeholder="New task"
+        value={taskText}
+        onChangeText={setTaskText} />
+      <TouchableOpacity onPress={addTask} disabled={taskText === ''}>
+        <View style={[styles.addTaskButton, taskText === '' && styles.disabled]}>
           <Text style={styles.addTaskIcon}>+</Text>
         </View>
       </TouchableOpacity>
@@ -18,20 +35,23 @@ const NewTaskSection = () => {
 
 const styles = StyleSheet.create({
   newTaskContainer: {
-    position: 'absolute',
-    bottom: 30,
     width: '100%',
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
+    borderTopColor: '#b0b4bf',
+    borderTopWidth: 1,
+    backgroundColor: '#caced9'
   },
   newTaskInput: {
-    padding: 15,
+    paddingVertical: 15,
+    paddingHorizontal: 20,
     marginRight: 20,
+    marginVertical: 20,
     width: '65%',
     backgroundColor: 'white',
     borderRadius: 60,
-    borderColor: '#d9d9d9',
+    borderColor: '#b0b4bf',
     borderWidth: 1
   },
   addTaskButton: {
@@ -41,12 +61,15 @@ const styles = StyleSheet.create({
     borderRadius: 60,
     justifyContent: 'center',
     alignItems: 'center',
-    borderColor: '#d9d9d9',
+    borderColor: '#b0b4bf',
     borderWidth: 1
   },
   addTaskIcon: {
-    fontSize: 24,
+    fontSize: 16,
     color: 'gray'
+  },
+  disabled: {
+    opacity: 0.5
   }
 });
 

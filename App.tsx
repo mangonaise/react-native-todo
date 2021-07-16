@@ -9,18 +9,21 @@ const appInstance = new AppInstance();
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <AppContext.Provider value={appInstance}>
+    <AppContext.Provider value={appInstance}>
+      <View style={styles.container}>
         <TasksContainer />
         <NewTaskSection />
-      </AppContext.Provider>
-    </View>
+      </View>
+    </AppContext.Provider>
+
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'space-between',
     backgroundColor: '#e4e6eb',
   }
 });

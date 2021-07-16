@@ -9,6 +9,7 @@ export default class AppInstance {
   }
 
   public addTask(text: string) {
+    if (text === '') return;
     this.tasks.push(new Task(text));
   }
 }
