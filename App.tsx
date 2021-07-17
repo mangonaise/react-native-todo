@@ -1,3 +1,4 @@
+import 'react-native-gesture-handler';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import NewTaskSection from './components/NewTaskSection';
@@ -15,7 +16,6 @@ export default function App() {
         <NewTaskSection />
       </View>
     </AppContext.Provider>
-
   );
 }
 

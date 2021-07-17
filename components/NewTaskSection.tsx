@@ -1,7 +1,6 @@
 import React from 'react';
 import AppContext from '../logic/appContext';
 import { useState } from 'react';
-import { useEffect } from 'react';
 import { useContext } from 'react';
 import { Keyboard, KeyboardAvoidingView, Platform, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
@@ -48,6 +47,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     marginRight: 20,
     marginVertical: 20,
+    height: 60,
     width: '65%',
     backgroundColor: 'white',
     borderRadius: 60,

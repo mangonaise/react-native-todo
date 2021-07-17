@@ -12,7 +12,9 @@ const TasksContainer = () => {
     <ScrollView style={styles.tasksContainer}>
       <Text style={styles.sectionTitle}>Your tasks</Text>
       <View style={styles.items}>
-        {app.tasks.map(task => <Task text={task.text} key={task.id} />)}
+        {app.tasks
+          .filter(task => !task.isComplete)
+          .map(task => <Task task={task} key={task.id} />)}
       </View>
     </ScrollView>
   )
@@ -21,15 +23,16 @@ const TasksContainer = () => {
 const styles = StyleSheet.create({
   tasksContainer: {
     paddingTop: 25,
-    paddingHorizontal: 25,
-    height: '80%'
   },
   sectionTitle: {
     fontSize: 24,
+    paddingHorizontal: 25,
     fontWeight: 'bold',
     color: 'black'
   },
   items: {
+    flexDirection: 'column',
+    alignItems: 'center',
     marginTop: 20,
     marginBottom: 30
   }

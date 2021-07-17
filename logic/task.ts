@@ -1,3 +1,4 @@
+import { makeAutoObservable } from 'mobx';
 import { nanoid } from 'nanoid/non-secure';
 
 export default class Task {
@@ -6,6 +7,7 @@ export default class Task {
   isComplete = false;
 
   constructor(text: string) {
+    makeAutoObservable(this);
     this.id = nanoid();
     this.text = text;
   }

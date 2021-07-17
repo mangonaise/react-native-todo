@@ -10,6 +10,10 @@ export default class AppInstance {
 
   public addTask(text: string) {
     if (text === '') return;
-    this.tasks.push(new Task(text));
+    this.tasks.unshift(new Task(text));
+  }
+
+  public deleteTask(taskToDelete: Task) {
+    this.tasks = this.tasks.filter(task => task !== taskToDelete);
   }
 }
