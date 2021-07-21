@@ -1,10 +1,16 @@
 import 'react-native-gesture-handler';
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { Platform, StyleSheet, UIManager, View } from 'react-native';
 import NewTaskSection from './components/NewTaskSection';
 import TasksContainer from './components/TasksContainer';
 import AppInstance from './logic/appInstance';
 import AppContext from './logic/appContext';
+
+if (Platform.OS === 'android') {
+  if (UIManager.setLayoutAnimationEnabledExperimental) {
+    UIManager.setLayoutAnimationEnabledExperimental(true);
+  }
+}
 
 const appInstance = new AppInstance();
 

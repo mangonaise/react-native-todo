@@ -2,13 +2,17 @@ import React from 'react';
 import AppContext from '../logic/appContext';
 import { useState } from 'react';
 import { useContext } from 'react';
-import { Keyboard, KeyboardAvoidingView, Platform, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Keyboard, KeyboardAvoidingView, LayoutAnimation, Platform, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
 const NewTaskSection = () => {
   const app = useContext(AppContext);
   const [taskText, setTaskText] = useState('');
 
   function addTask() {
+    LayoutAnimation.configureNext(LayoutAnimation.create(
+      200, 
+      LayoutAnimation.Types.easeInEaseOut, 
+      LayoutAnimation.Properties.opacity));
     Keyboard.dismiss();
     app.addTask(taskText);
     setTaskText('');
