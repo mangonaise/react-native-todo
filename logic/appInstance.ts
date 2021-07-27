@@ -16,4 +16,8 @@ export default class AppInstance {
   public deleteTask(taskToDelete: Task) {
     this.tasks = this.tasks.filter(task => task !== taskToDelete);
   }
+
+  public setTasks(newData: Task[]) {
+    this.tasks = newData;
+  }
 }

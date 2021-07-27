@@ -4,12 +4,17 @@ import { useContext } from 'react';
 import { useRef } from 'react';
 import { View, Text, StyleSheet, Animated, Dimensions, LayoutAnimation } from 'react-native';
 import { Swipeable } from 'react-native-gesture-handler';
-import TaskInstance from '../logic/task';
-import AppContext from '../logic/appContext';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faCheck, faTrash } from '@fortawesome/free-solid-svg-icons';
+import TaskInstance from '../logic/task';
+import AppContext from '../logic/appContext';
 
-const Task = ({ task }: { task: TaskInstance }) => {
+interface Props {
+  task: TaskInstance,
+  isDragging: boolean
+}
+
+const Task = ({ task }: Props) => {
   const app = useContext(AppContext);
   const exitAnimationProgress = useRef(new Animated.Value(0)).current;
   const [swipeDirection, setSwipeDirection] = useState<1 | -1>(1);
