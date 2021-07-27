@@ -1,7 +1,7 @@
 import React from 'react';
+import * as Haptics from 'expo-haptics';
 import { observer } from 'mobx-react-lite';
 import { useContext } from 'react';
-import { useRef } from 'react';
 import { View, Text, StyleSheet, Pressable } from 'react-native';
 import DraggableFlatList, { RenderItemParams } from 'react-native-draggable-flatlist';
 import AppContext from '../logic/appContext';
@@ -37,6 +37,11 @@ function TasksContainer() {
 }
 
 const renderItem = ({ item, index, drag, isActive }: RenderItemParams<ListItem>) => {
+  function handleLongPress() {
+    drag();
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+  }
+
   return (
     <Pressable
       style={{
@@ -45,7 +50,7 @@ const renderItem = ({ item, index, drag, isActive }: RenderItemParams<ListItem>)
         opacity: isActive ? 0.65 : 1
       }}
       delayLongPress={300}
-      onLongPress={drag}>
+      onLongPress={handleLongPress}>
       <Task task={item.task} isDragging={isActive} />
     </Pressable>
   );
