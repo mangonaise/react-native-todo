@@ -42,8 +42,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    borderTopColor: '#b0b4bf',
-    borderTopWidth: 1,
     backgroundColor: '#caced9'
   },
   newTaskInput: {
@@ -54,9 +52,7 @@ const styles = StyleSheet.create({
     height: 60,
     width: '65%',
     backgroundColor: 'white',
-    borderRadius: 60,
-    borderColor: '#b0b4bf',
-    borderWidth: 1
+    borderRadius: 60
   },
   addTaskButton: {
     width: 60,
@@ -64,9 +60,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderRadius: 60,
     justifyContent: 'center',
-    alignItems: 'center',
-    borderColor: '#b0b4bf',
-    borderWidth: 1
+    alignItems: 'center'
   },
   addTaskIcon: {
     fontSize: 16,

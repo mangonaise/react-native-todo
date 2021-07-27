@@ -6,6 +6,8 @@ import { View, Text, StyleSheet, Animated, Dimensions, LayoutAnimation } from 'r
 import { Swipeable } from 'react-native-gesture-handler';
 import TaskInstance from '../logic/task';
 import AppContext from '../logic/appContext';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faCheck, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 const Task = ({ task }: { task: TaskInstance }) => {
   const app = useContext(AppContext);
@@ -41,7 +43,7 @@ const Task = ({ task }: { task: TaskInstance }) => {
   }
 
   const { opacity, translateX } = getExitAnimationProperties(exitAnimationProgress, swipeDirection);
- 
+
   return (
     <Animated.View style={[styles.taskContainer, { opacity, translateX }]}>
       <Swipeable
@@ -67,7 +69,7 @@ const ActionDone = (progress: Animated.AnimatedInterpolation) => {
 
   return (
     <Animated.View style={[styles.doneContainer, { opacity }]}>
-      <Text style={styles.doneText}>Done</Text>
+      <FontAwesomeIcon style={styles.doneIcon} icon={faCheck} />
     </Animated.View>
   )
 }
@@ -80,7 +82,7 @@ const ActionDelete = (progress: Animated.AnimatedInterpolation) => {
 
   return (
     <Animated.View style={[styles.deleteContainer, { opacity }]}>
-      <Text style={styles.deleteText}>Delete</Text>
+      <FontAwesomeIcon style={styles.deleteIcon} icon={faTrash} />
     </Animated.View>
   )
 }
@@ -125,9 +127,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderRadius: 10,
   },
-  doneText: {
+  doneIcon: {
     color: 'white',
-    paddingLeft: 15,
+    marginLeft: 15
   },
   deleteContainer: {
     marginRight: 25,
@@ -138,9 +140,9 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
     borderRadius: 10
   },
-  deleteText: {
+  deleteIcon: {
     color: 'white',
-    paddingRight: 15,
+    marginRight: 15
   }
 })
 
