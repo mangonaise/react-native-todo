@@ -3,6 +3,7 @@ import Task from './task';
 
 export default class AppInstance {
   tasks = [] as Task[];
+  taskBeingEdited = null as Task | null;
 
   constructor() {
     makeAutoObservable(this); 
@@ -19,5 +20,9 @@ export default class AppInstance {
 
   public setTasks(newData: Task[]) {
     this.tasks = newData;
+  }
+
+  public setTaskBeingEdited(task: Task | null) {
+    this.taskBeingEdited = task;
   }
 }

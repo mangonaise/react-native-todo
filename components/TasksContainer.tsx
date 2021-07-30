@@ -1,8 +1,7 @@
 import React from 'react';
-import * as Haptics from 'expo-haptics';
 import { observer } from 'mobx-react-lite';
 import { useContext } from 'react';
-import { View, Text, StyleSheet, Pressable } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import DraggableFlatList, { RenderItemParams } from 'react-native-draggable-flatlist';
 import AppContext from '../logic/appContext';
 import Task from './Task';
@@ -31,28 +30,15 @@ function TasksContainer() {
         renderItem={renderItem}
         keyExtractor={item => item.key}
         onDragEnd={({ data }) => app.setTasks(data.map(item => item.task))}
+        keyboardShouldPersistTaps="always"
       />
     </View>
   );
 }
 
 const renderItem = ({ item, index, drag, isActive }: RenderItemParams<ListItem>) => {
-  function handleLongPress() {
-    drag();
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-  }
-
   return (
-    <Pressable
-      style={{
-        alignItems: "center",
-        justifyContent: "center",
-        opacity: isActive ? 0.65 : 1
-      }}
-      delayLongPress={300}
-      onLongPress={handleLongPress}>
-      <Task task={item.task} isDragging={isActive} />
-    </Pressable>
+    <Task task={item.task} isDragging={isActive} onDrag={drag} />
   );
 }
 

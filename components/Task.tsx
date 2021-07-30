@@ -1,30 +1,39 @@
 import React from 'react';
+import * as Haptics from 'expo-haptics';
+import { observer } from 'mobx-react-lite';
 import { useState } from 'react';
 import { useContext } from 'react';
 import { useRef } from 'react';
-import { View, Text, StyleSheet, Animated, Dimensions, LayoutAnimation } from 'react-native';
+import { View, Text, StyleSheet, Animated, Dimensions, LayoutAnimation, Pressable } from 'react-native';
 import { Swipeable } from 'react-native-gesture-handler';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faCheck, faTrash } from '@fortawesome/free-solid-svg-icons';
 import TaskInstance from '../logic/task';
 import AppContext from '../logic/appContext';
+import TaskEditor from './TaskEditor';
 
 interface Props {
   task: TaskInstance,
+  onDrag: () => void,
   isDragging: boolean
 }
 
-const Task = ({ task }: Props) => {
+const Task = ({ task, onDrag, isDragging }: Props) => {
   const app = useContext(AppContext);
   const exitAnimationProgress = useRef(new Animated.Value(0)).current;
   const [swipeDirection, setSwipeDirection] = useState<1 | -1>(1);
 
   function prepareLayoutAnimation() {
-    LayoutAnimation.configureNext(LayoutAnimation.create(
-      200,
-      LayoutAnimation.Types.easeOut,
-      LayoutAnimation.Properties.opacity
-    ));
+    LayoutAnimation.configureNext({
+      duration: 200,
+      update: {
+        type: LayoutAnimation.Types.easeOut
+      },
+      delete: {
+        type: LayoutAnimation.Types.easeOut,
+        property: LayoutAnimation.Properties.opacity
+      }
+    })
   }
 
   function handleComplete() {
@@ -35,6 +44,16 @@ const Task = ({ task }: Props) => {
   function handleDelete() {
     prepareLayoutAnimation();
     app.deleteTask(task);
+  }
+
+  function handlePress() {
+    prepareLayoutAnimation();
+    app.setTaskBeingEdited(task);
+  }
+
+  function handleLongPress() {
+    onDrag();
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
   }
 
   function handleSwipe(direction: 'left' | 'right') {
@@ -49,20 +68,34 @@ const Task = ({ task }: Props) => {
 
   const { opacity, translateX } = getExitAnimationProperties(exitAnimationProgress, swipeDirection);
 
+  if (app.taskBeingEdited === task) {
+    return <TaskEditor task={task} prepareLayoutAnimation={prepareLayoutAnimation} />
+  }
+
   return (
-    <Animated.View style={[styles.taskContainer, { opacity, translateX }]}>
-      <Swipeable
-        renderLeftActions={ActionDone}
-        renderRightActions={ActionDelete}
-        onSwipeableLeftOpen={handleComplete}
-        onSwipeableLeftWillOpen={() => handleSwipe('left')}
-        onSwipeableRightOpen={handleDelete}
-        onSwipeableRightWillOpen={() => handleSwipe('right')}>
-        <View style={styles.task}>
-          <Text style={styles.taskText}>{task.text}</Text>
-        </View>
-      </Swipeable>
-    </Animated.View>
+    <Pressable
+      style={{
+        alignItems: "center",
+        justifyContent: "center",
+        opacity: isDragging ? 0.65 : 1
+      }}
+      delayLongPress={300}
+      onPress={handlePress}
+      onLongPress={handleLongPress}>
+      <Animated.View style={[styles.taskContainer, { opacity, translateX }]}>
+        <Swipeable
+          renderLeftActions={ActionDone}
+          renderRightActions={ActionDelete}
+          onSwipeableLeftOpen={handleComplete}
+          onSwipeableLeftWillOpen={() => handleSwipe('left')}
+          onSwipeableRightOpen={handleDelete}
+          onSwipeableRightWillOpen={() => handleSwipe('right')}>
+          <View style={styles.task}>
+            <Text style={styles.taskText}>{task.text}</Text>
+          </View>
+        </Swipeable>
+      </Animated.View>
+    </Pressable>
   )
 }
 
@@ -151,4 +184,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default Task;
+export default observer(Task);
