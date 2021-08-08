@@ -6,8 +6,8 @@ export default class List {
   tasks = [] as Task[];
 
   constructor(name: string) {
-    makeAutoObservable(this);
     this.name = name;
+    makeAutoObservable(this);
   }
 
   public renameList(newName: string) {

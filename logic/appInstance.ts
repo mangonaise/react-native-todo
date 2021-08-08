@@ -3,14 +3,14 @@ import List from './list';
 import Task from './task';
 
 export default class AppInstance {
-  lists = [] as List[];
-  activeList = null! as List;
+  lists: List[];
+  activeList: List;
   taskBeingEdited = null as Task | null;
 
   constructor() {
-    makeAutoObservable(this);
     this.lists = [new List('Your tasks'), new List('Another list')];
     this.activeList = this.lists[0];
+    makeAutoObservable(this);
   }
 
   public setActiveList(list: List) {

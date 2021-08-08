@@ -7,9 +7,9 @@ export default class Task {
   isComplete = false;
 
   constructor(text: string) {
-    makeAutoObservable(this);
     this.id = nanoid();
     this.text = text;
+    makeAutoObservable(this);
   }
 
   public setComplete(newState: boolean) {
