@@ -14,7 +14,6 @@ interface Props {
 const TaskEditor = ({ task, prepareLayoutAnimation }: Props) => {
   const app = useContext(AppContext);
   const [taskText, setTaskText] = useState(task.text);
-  const inputRef = useRef<any>();
 
   function closeEditor() {
     prepareLayoutAnimation();
@@ -29,7 +28,6 @@ const TaskEditor = ({ task, prepareLayoutAnimation }: Props) => {
   return (
     <View style={styles.container}>
       <TextInput
-        ref={inputRef}
         value={taskText}
         onChangeText={setTaskText}
         style={styles.input}  

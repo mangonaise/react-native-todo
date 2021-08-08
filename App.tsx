@@ -2,7 +2,7 @@ import 'react-native-gesture-handler';
 import React from 'react';
 import { LogBox } from 'react-native';
 import { Platform, StyleSheet, UIManager, View } from 'react-native';
-import NewTaskSection from './components/NewTaskSection';
+import ActionsBar from './components/ActionsBar';
 import TasksContainer from './components/TasksContainer';
 import AppInstance from './logic/appInstance';
 import AppContext from './logic/appContext';
@@ -24,7 +24,7 @@ export default function App() {
     <AppContext.Provider value={appInstance}>
       <View style={styles.container}>
         <TasksContainer />
-        <NewTaskSection />
+        <ActionsBar />
       </View>
     </AppContext.Provider>
   );

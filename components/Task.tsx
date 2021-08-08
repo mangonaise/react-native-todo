@@ -43,7 +43,7 @@ const Task = ({ task, onDrag, isDragging }: Props) => {
 
   function handleDelete() {
     prepareLayoutAnimation();
-    app.deleteTask(task);
+    app.activeList.deleteTask(task);
   }
 
   function handlePress() {

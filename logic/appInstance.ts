@@ -1,25 +1,20 @@
 import { makeAutoObservable } from 'mobx';
+import List from './list';
 import Task from './task';
 
 export default class AppInstance {
-  tasks = [] as Task[];
+  lists = [] as List[];
+  activeList = null! as List;
   taskBeingEdited = null as Task | null;
 
   constructor() {
-    makeAutoObservable(this); 
+    makeAutoObservable(this);
+    this.lists = [new List('Your tasks'), new List('Another list')];
+    this.activeList = this.lists[0];
   }
 
-  public addTask(text: string) {
-    if (text === '') return;
-    this.tasks.unshift(new Task(text));
-  }
-
-  public deleteTask(taskToDelete: Task) {
-    this.tasks = this.tasks.filter(task => task !== taskToDelete);
-  }
-
-  public setTasks(newData: Task[]) {
-    this.tasks = newData;
+  public setActiveList(list: List) {
+    this.activeList = list;
   }
 
   public setTaskBeingEdited(task: Task | null) {

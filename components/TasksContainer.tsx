@@ -15,7 +15,7 @@ type ListItem = {
 function TasksContainer() {
   const app = useContext(AppContext);
 
-  const data = app.tasks
+  const data = app.activeList.tasks
     .filter(task => !task.isComplete)
     .map(task => ({
       key: task.id,
@@ -24,12 +24,12 @@ function TasksContainer() {
 
   return (
     <View style={styles.tasksContainer}>
-      <Text style={styles.sectionTitle}>Your tasks</Text>
+      <Text style={styles.sectionTitle}>{app.activeList.name}</Text>
       <DraggableFlatList
         data={data}
         renderItem={renderItem}
         keyExtractor={item => item.key}
-        onDragEnd={({ data }) => app.setTasks(data.map(item => item.task))}
+        onDragEnd={({ data }) => app.activeList.setTasks(data.map(item => item.task))}
         keyboardShouldPersistTaps="always"
       />
     </View>
