@@ -5,7 +5,7 @@ import { Platform, StyleSheet, UIManager, View } from 'react-native';
 import ActionsBar from './components/ActionsBar';
 import TasksContainer from './components/TasksContainer';
 import AppInstance from './logic/appInstance';
-import AppContext from './logic/appContext';
+import AppContext from './react-helpers/appContext';
 
 LogBox.ignoreLogs([
   'ReactNativeFiberHostComponent: Calling getNode() on the ref of an Animated component is no longer necessary. You can now directly use the ref instead. This method will be removed in a future release.',

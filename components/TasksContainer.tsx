@@ -3,7 +3,7 @@ import { observer } from 'mobx-react-lite';
 import { useContext } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import DraggableFlatList, { RenderItemParams } from 'react-native-draggable-flatlist';
-import AppContext from '../logic/appContext';
+import AppContext from '../react-helpers/appContext';
 import Task from './Task';
 import TaskInstance from '../logic/task';
 

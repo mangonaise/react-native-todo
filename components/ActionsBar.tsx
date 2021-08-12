@@ -1,8 +1,8 @@
 import React from 'react';
-import AppContext from '../logic/appContext';
+import AppContext from '../react-helpers/appContext';
 import { useState } from 'react';
 import { useContext } from 'react';
-import { Dimensions, Keyboard, KeyboardAvoidingView, LayoutAnimation, Platform, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Dimensions, Keyboard, KeyboardAvoidingView, LayoutAnimation, Platform, StyleSheet, TextInput, TouchableOpacity, View } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faList, faPlus } from '@fortawesome/free-solid-svg-icons';
 import ListSelectModal from './ListSelectModal';

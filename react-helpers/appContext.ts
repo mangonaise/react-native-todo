@@ -1,5 +1,5 @@
 import React from 'react';
-import AppInstance from './appInstance';
+import AppInstance from '../logic/appInstance';
 
 const AppContext = React.createContext<AppInstance>(null!);
 

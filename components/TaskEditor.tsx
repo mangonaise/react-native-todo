@@ -2,7 +2,7 @@ import React from 'react';
 import { useContext } from 'react';
 import { useState } from 'react';
 import { TextInput, View, StyleSheet, Text, TouchableOpacity } from 'react-native';
-import AppContext from '../logic/appContext';
+import AppContext from '../react-helpers/appContext';
 import Task from '../logic/task';
 
 interface Props {

@@ -4,7 +4,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faEllipsisH } from '@fortawesome/free-solid-svg-icons';
 import Modal from 'react-native-modal';
-import AppContext from '../logic/appContext';
+import AppContext from '../react-helpers/appContext';
 import List from '../logic/list';
 
 interface Props {

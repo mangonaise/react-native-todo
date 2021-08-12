@@ -4,13 +4,14 @@ import { observer } from 'mobx-react-lite';
 import { useState } from 'react';
 import { useContext } from 'react';
 import { useRef } from 'react';
-import { View, Text, StyleSheet, Animated, Dimensions, LayoutAnimation, Pressable } from 'react-native';
+import { View, Text, StyleSheet, Animated, Dimensions, Pressable } from 'react-native';
 import { Swipeable } from 'react-native-gesture-handler';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faCheck, faTrash } from '@fortawesome/free-solid-svg-icons';
 import TaskInstance from '../logic/task';
-import AppContext from '../logic/appContext';
+import AppContext from '../react-helpers/appContext';
 import TaskEditor from './TaskEditor';
+import prepareLayoutAnimation from '../react-helpers/prepareLayoutAnimation';
 
 interface Props {
   task: TaskInstance,
@@ -22,19 +23,6 @@ const Task = ({ task, onDrag, isDragging }: Props) => {
   const app = useContext(AppContext);
   const exitAnimationProgress = useRef(new Animated.Value(0)).current;
   const [swipeDirection, setSwipeDirection] = useState<1 | -1>(1);
-
-  function prepareLayoutAnimation() {
-    LayoutAnimation.configureNext({
-      duration: 200,
-      update: {
-        type: LayoutAnimation.Types.easeOut
-      },
-      delete: {
-        type: LayoutAnimation.Types.easeOut,
-        property: LayoutAnimation.Properties.opacity
-      }
-    })
-  }
 
   function handleComplete() {
     prepareLayoutAnimation();
