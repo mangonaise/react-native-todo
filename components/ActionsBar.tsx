@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faList, faPlus } from '@fortawesome/free-solid-svg-icons';
 import ListSelectModal from './ListSelectModal';
 import List from '../logic/list';
+import ListEditorModal from './ListEditorModal';
 
 const ActionsBar = () => {
   const [showListsModal, setShowListsModal] = useState(false);
@@ -27,8 +28,9 @@ const ActionsBar = () => {
       <ListSelectModal
         isOpen={showListsModal}
         onEditList={list => setListBeingEdited(list)}
-        onClose={() => setShowListsModal(false)}
+        hide={() => setShowListsModal(false)}
       />
+      <ListEditorModal listBeingEdited={listBeingEdited} hide={() => setListBeingEdited(null)} />
     </>
   )
 }

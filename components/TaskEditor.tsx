@@ -1,8 +1,7 @@
 import React from 'react';
-import { useRef } from 'react';
 import { useContext } from 'react';
 import { useState } from 'react';
-import { TextInput, View, StyleSheet, Pressable, Text } from 'react-native';
+import { TextInput, View, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import AppContext from '../logic/appContext';
 import Task from '../logic/task';
 
@@ -33,12 +32,12 @@ const TaskEditor = ({ task, prepareLayoutAnimation }: Props) => {
         style={styles.input}  
       />
       <View style={styles.buttonsContainer}>
-        <Pressable style={styles.button} onPress={closeEditor}>
+        <TouchableOpacity style={styles.button} onPress={closeEditor}>
           <Text style={[styles.buttonText, { color: '#878787' }]}>Cancel</Text>
-        </Pressable>
-        <Pressable style={styles.button} onPress={handleSave}>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={handleSave}>
           <Text style={[styles.buttonText, { color: '#4c9acf' }]}>Rename</Text>
-        </Pressable>
+        </TouchableOpacity>
       </View>
     </View>
   )

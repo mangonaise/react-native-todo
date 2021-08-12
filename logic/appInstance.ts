@@ -15,6 +15,7 @@ export default class AppInstance {
 
   public setActiveList(list: List) {
     this.activeList = list;
+    this.taskBeingEdited = null;
   }
 
   public setTaskBeingEdited(task: Task | null) {
