@@ -31,6 +31,9 @@ const ListSelectModal = ({ isOpen, onEditList, hide }: Props) => {
       isVisible={isOpen} 
       onDismiss={hide} 
       onBackdropPress={hide}
+      onSwipeComplete={hide}
+      swipeDirection="down"
+      swipeThreshold={50}
       useNativeDriverForBackdrop 
       style={styles.modal}>
       <View style={styles.container}>
