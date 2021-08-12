@@ -6,6 +6,7 @@ import DraggableFlatList, { RenderItemParams } from 'react-native-draggable-flat
 import AppContext from '../react-helpers/appContext';
 import Task from './Task';
 import TaskInstance from '../logic/task';
+import prepareLayoutAnimation from '../react-helpers/prepareLayoutAnimation';
 
 type ListItem = {
   key: string;
@@ -22,8 +23,14 @@ function TasksContainer() {
       task
     } as ListItem));
 
+  function cancelTaskEdit() {
+    prepareLayoutAnimation();
+    app.setTaskBeingEdited(null);
+    return true;
+  }
+
   return (
-    <View style={styles.tasksContainer}>
+    <View style={styles.tasksContainer} onStartShouldSetResponder={cancelTaskEdit}>
       <Text style={styles.sectionTitle}>{app.activeList.name}</Text>
       <DraggableFlatList
         data={data}
