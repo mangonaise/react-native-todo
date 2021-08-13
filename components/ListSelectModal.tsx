@@ -2,10 +2,10 @@ import React from 'react';
 import { useContext } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faEllipsisH } from '@fortawesome/free-solid-svg-icons';
+import { faCircle, faEllipsisH } from '@fortawesome/free-solid-svg-icons';
 import Modal from 'react-native-modal';
 import AppContext from '../react-helpers/appContext';
-import List from '../logic/list';
+import List, { listColors } from '../logic/list';
 
 interface Props {
   isOpen: boolean,
@@ -27,14 +27,14 @@ const ListSelectModal = ({ isOpen, onEditList, hide }: Props) => {
   }
 
   return (
-    <Modal 
-      isVisible={isOpen} 
-      onDismiss={hide} 
+    <Modal
+      isVisible={isOpen}
+      onDismiss={hide}
       onBackdropPress={hide}
       onSwipeComplete={hide}
       swipeDirection="down"
       swipeThreshold={50}
-      useNativeDriverForBackdrop 
+      useNativeDriverForBackdrop
       style={styles.modal}>
       <View style={styles.container}>
         {app.lists.map((list, index) => (
@@ -43,7 +43,8 @@ const ListSelectModal = ({ isOpen, onEditList, hide }: Props) => {
               style={styles.selectListButton}
               onPress={() => handleSelectList(list)}
               activeOpacity={0.6}>
-              <Text>{list.name}</Text>
+              <FontAwesomeIcon icon={faCircle} color={listColors[list.colorId]} />
+              <Text style={styles.listName}>{list.name}</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.editListButton}
@@ -73,9 +74,14 @@ const styles = StyleSheet.create({
   selectListButton: {
     backgroundColor: 'white',
     height: 50,
-    paddingHorizontal: 20,
-    justifyContent: 'center',
+    paddingHorizontal: 15,
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
     flexGrow: 1
+  },
+  listName: {
+    marginLeft: 15
   },
   editListButton: {
     backgroundColor: 'white',

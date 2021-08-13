@@ -1,12 +1,24 @@
 import { makeAutoObservable } from 'mobx';
 import Task from './task';
 
+export const listColors = [
+  '#71bf86', // green
+  '#8197bd', // blue
+  '#9681bd', // purple
+  '#c973ac', // pink
+  '#E37777', // red
+  '#f0983a', // orange
+  '#e0b62b', // yellow
+]
+
 export default class List {
   name: string;
   tasks = [] as Task[];
+  colorId: number;
 
   constructor(name: string) {
     this.name = name;
+    this.colorId = Math.floor(Math.random() * listColors.length);
     makeAutoObservable(this);
   }
 
@@ -25,5 +37,9 @@ export default class List {
 
   public setTasks(newData: Task[]) {
     this.tasks = newData;
+  }
+
+  public setColorId(newColorId: number) {
+    this.colorId = newColorId;
   }
 }

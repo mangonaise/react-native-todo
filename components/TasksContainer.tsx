@@ -1,12 +1,15 @@
 import React from 'react';
+import { listColors } from '../logic/list';
 import { observer } from 'mobx-react-lite';
 import { useContext } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import DraggableFlatList, { RenderItemParams } from 'react-native-draggable-flatlist';
-import AppContext from '../react-helpers/appContext';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faCircle } from '@fortawesome/free-solid-svg-icons';
+import prepareLayoutAnimation from '../react-helpers/prepareLayoutAnimation';
 import Task from './Task';
 import TaskInstance from '../logic/task';
-import prepareLayoutAnimation from '../react-helpers/prepareLayoutAnimation';
+import DraggableFlatList, { RenderItemParams } from 'react-native-draggable-flatlist';
+import AppContext from '../react-helpers/appContext';
 
 type ListItem = {
   key: string;
@@ -31,7 +34,12 @@ function TasksContainer() {
 
   return (
     <View style={styles.tasksContainer} onStartShouldSetResponder={cancelTaskEdit}>
-      <Text style={styles.sectionTitle}>{app.activeList.name}</Text>
+      <View style={styles.titleContainer}>
+        <FontAwesomeIcon icon={faCircle} color={listColors[app.activeList.colorId]} />
+        <Text style={styles.sectionTitle}>
+          {app.activeList.name}
+        </Text>
+      </View>
       <DraggableFlatList
         data={data}
         renderItem={renderItem}
@@ -55,10 +63,15 @@ const styles = StyleSheet.create({
     paddingTop: 25,
     height: '100%'
   },
-  sectionTitle: {
-    fontSize: 24,
-    paddingHorizontal: 25,
+  titleContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingLeft: 25,
     marginBottom: 20,
+  },
+  sectionTitle: {
+    marginLeft: 10,
+    fontSize: 24,
     fontWeight: 'bold',
     color: 'black'
   }
