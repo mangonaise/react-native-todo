@@ -7,6 +7,9 @@ import { Keyboard, StyleSheet, Text, TouchableOpacity, View } from 'react-native
 import { TextInput } from 'react-native-gesture-handler';
 import Modal from 'react-native-modal';
 import List, { listColors } from '../logic/list';
+import { useRef } from 'react';
+import { useContext } from 'react';
+import AppContext from '../react-helpers/appContext';
 
 interface Props {
   listBeingEdited: List | null,
@@ -14,12 +17,19 @@ interface Props {
 }
 
 const ListEditorModal = ({ listBeingEdited, hide }: Props) => {
+  const app = useContext(AppContext);
+  const isNewList = useRef(false);
   const [listName, setListName] = useState('');
   const [listColorId, setListColorId] = useState(listBeingEdited?.colorId ?? 0);
 
   function saveList() {
-    listBeingEdited!.renameList(listName);
-    listBeingEdited!.setColorId(listColorId);
+    const updatedList = listBeingEdited!;
+    updatedList.renameList(listName);
+    updatedList.setColorId(listColorId);
+    if (isNewList.current) {
+      app.addList(updatedList);
+      app.setActiveList(updatedList);
+    }
     Keyboard.dismiss();
     hide();
   }
@@ -32,6 +42,8 @@ const ListEditorModal = ({ listBeingEdited, hide }: Props) => {
   useEffect(() => {
     if (listBeingEdited) {
       setListName(listBeingEdited.name);
+      setListColorId(listBeingEdited.colorId);
+      isNewList.current = !(!!listBeingEdited.name);
     }
   }, [listBeingEdited])
 
@@ -41,10 +53,14 @@ const ListEditorModal = ({ listBeingEdited, hide }: Props) => {
       isVisible={!!listBeingEdited}
       onBackdropPress={hide}
       useNativeDriverForBackdrop
+      hideModalContentWhileAnimating
+      animationIn="fadeInUp"
+      animationOut="fadeOutDown"
       style={styles.modal}>
       <View style={styles.container}>
         <TextInput
           value={listName}
+          placeholder="Untitled list"
           onChangeText={setListName}
           style={styles.input}
         />

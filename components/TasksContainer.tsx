@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     fontSize: 24,
     fontWeight: 'bold',
-    color: 'black'
+    color: '#3b3b3b'
   }
 });
 

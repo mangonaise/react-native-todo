@@ -13,6 +13,10 @@ export default class AppInstance {
     makeAutoObservable(this);
   }
 
+  public addList(newList: List) {
+    this.lists.push(newList);
+  }
+
   public setActiveList(list: List) {
     this.activeList = list;
     this.taskBeingEdited = null;

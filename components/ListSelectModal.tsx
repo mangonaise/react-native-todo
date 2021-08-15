@@ -2,7 +2,7 @@ import React from 'react';
 import { useContext } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faCircle, faEllipsisH } from '@fortawesome/free-solid-svg-icons';
+import { faCircle, faEllipsisH, faPlus } from '@fortawesome/free-solid-svg-icons';
 import Modal from 'react-native-modal';
 import AppContext from '../react-helpers/appContext';
 import List, { listColors } from '../logic/list';
@@ -17,8 +17,8 @@ const ListSelectModal = ({ isOpen, onEditList, hide }: Props) => {
   const app = useContext(AppContext);
 
   function handleSelectList(list: List) {
-    app.setActiveList(list);
     hide();
+    app.setActiveList(list);
   }
 
   function handleEditList(list: List) {
@@ -35,6 +35,9 @@ const ListSelectModal = ({ isOpen, onEditList, hide }: Props) => {
       swipeDirection="down"
       swipeThreshold={50}
       useNativeDriverForBackdrop
+      hideModalContentWhileAnimating
+      animationIn="fadeInUp"
+      animationOut='fadeOutDown'
       style={styles.modal}>
       <View style={styles.container}>
         {app.lists.map((list, index) => (
@@ -42,7 +45,7 @@ const ListSelectModal = ({ isOpen, onEditList, hide }: Props) => {
             <TouchableOpacity
               style={styles.selectListButton}
               onPress={() => handleSelectList(list)}
-              activeOpacity={0.6}>
+              activeOpacity={0.3}>
               <FontAwesomeIcon icon={faCircle} color={listColors[list.colorId]} />
               <Text style={styles.listName}>{list.name}</Text>
             </TouchableOpacity>
@@ -53,6 +56,18 @@ const ListSelectModal = ({ isOpen, onEditList, hide }: Props) => {
             </TouchableOpacity>
           </View>
         ))}
+        <View style={[styles.row, { justifyContent: 'center' }]}>
+          <TouchableOpacity
+            onPress={() => handleEditList(new List(''))}
+            style={styles.createListButton}
+            activeOpacity={0.3}>
+            <FontAwesomeIcon icon={faPlus} color="#4c9acf" />
+            <Text style={styles.createListText}>
+              Create new list
+            </Text>
+          </TouchableOpacity>
+        </View>
+
       </View>
     </Modal>
   )
@@ -65,7 +80,7 @@ const styles = StyleSheet.create({
   },
   container: {
     width: '100%',
-    backgroundColor: '#d9d9d9'
+    backgroundColor: 'white'
   },
   row: {
     flexDirection: 'row',
@@ -88,6 +103,19 @@ const styles = StyleSheet.create({
     height: 50,
     paddingHorizontal: 15,
     justifyContent: 'center',
+  },
+  createListButton: {
+    height: 50,
+    width: '100%',
+    backgroundColor: '#f9f9f9',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  createListText: {
+    color: '#4c9acf',
+    marginLeft: 10,
+    fontWeight: '700'
   }
 });
 
