@@ -17,6 +17,13 @@ export default class AppInstance {
     this.lists.push(newList);
   }
 
+  public deleteList(listToDelete: List) {
+    this.lists = this.lists.filter(list => list !== listToDelete);
+    if (listToDelete === this.activeList) {
+      this.setActiveList(this.lists[0]);
+    }
+  }
+
   public setActiveList(list: List) {
     this.activeList = list;
     this.taskBeingEdited = null;

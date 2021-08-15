@@ -8,10 +8,12 @@ import { faList, faPlus } from '@fortawesome/free-solid-svg-icons';
 import ListSelectModal from './ListSelectModal';
 import List from '../logic/list';
 import ListEditorModal from './ListEditorModal';
+import ListDeleteModal from './ListDeleteModal';
 
 const ActionsBar = () => {
   const [showListsModal, setShowListsModal] = useState(false);
   const [listBeingEdited, setListBeingEdited] = useState<null | List>(null);
+  const [listBeingDeleted, setListBeingDeleted] = useState<null | List>(null);
 
   return (
     <>
@@ -30,7 +32,12 @@ const ActionsBar = () => {
         onEditList={list => setListBeingEdited(list)}
         hide={() => setShowListsModal(false)}
       />
-      <ListEditorModal listBeingEdited={listBeingEdited} hide={() => setListBeingEdited(null)} />
+      <ListEditorModal
+        listBeingEdited={listBeingEdited}
+        onListDeleteAttempt={list => setListBeingDeleted(list)}
+        hide={() => setListBeingEdited(null)}
+      />
+      <ListDeleteModal listBeingDeleted={listBeingDeleted} hide={() => setListBeingDeleted(null)} />
     </>
   )
 }
