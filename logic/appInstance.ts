@@ -8,7 +8,7 @@ export default class AppInstance {
   taskBeingEdited = null as Task | null;
 
   constructor() {
-    this.lists = [new List('Your tasks'), new List('Another list')];
+    this.lists = [new List('Your tasks')];
     this.activeList = this.lists[0];
     makeAutoObservable(this);
   }
