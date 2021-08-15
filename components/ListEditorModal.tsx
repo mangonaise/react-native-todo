@@ -1,7 +1,8 @@
 import React from 'react';
 import AppContext from '../react-helpers/appContext';
+import ModalsContext from '../react-helpers/modalsContext';
 import Modal from 'react-native-modal';
-import List, { listColors } from '../logic/list';
+import { listColors } from '../logic/list';
 import { faCircle, faDotCircle, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { useEffect } from 'react';
@@ -10,18 +11,19 @@ import { Keyboard, StyleSheet, Text, TouchableOpacity, View } from 'react-native
 import { TextInput } from 'react-native-gesture-handler';
 import { useRef } from 'react';
 import { useContext } from 'react';
+import { observer } from 'mobx-react-lite';
 
-interface Props {
-  listBeingEdited: List | null,
-  onListDeleteAttempt: (list: List) => void
-  hide: () => void
-}
-
-const ListEditorModal = ({ listBeingEdited, onListDeleteAttempt, hide }: Props) => {
+const ListEditorModal = () => {
   const app = useContext(AppContext);
+  const modalsHandler = useContext(ModalsContext);
+  const listBeingEdited = modalsHandler.listBeingEdited;
   const isNewList = useRef(false);
   const [listName, setListName] = useState('');
   const [listColorId, setListColorId] = useState(listBeingEdited?.colorId ?? 0);
+
+  function hide() {
+    modalsHandler.setListBeingEdited(null);
+  }
 
   function saveList() {
     const updatedList = listBeingEdited!;
@@ -45,7 +47,7 @@ const ListEditorModal = ({ listBeingEdited, onListDeleteAttempt, hide }: Props) 
     if (listBeingEdited!.tasks.length === 0) {
       app.deleteList(listBeingEdited!);
     } else {
-      onListDeleteAttempt(listBeingEdited!);
+      modalsHandler.setListBeingDeleted(listBeingEdited);
     }
     hide();
   }
@@ -184,4 +186,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default ListEditorModal;
+export default observer(ListEditorModal);

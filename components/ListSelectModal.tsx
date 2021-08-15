@@ -1,20 +1,22 @@
 import React from 'react';
+import AppContext from '../react-helpers/appContext';
+import ModalsContext from '../react-helpers/modalsContext';
+import Modal from 'react-native-modal';
+import List, { listColors } from '../logic/list';
 import { useContext } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faCircle, faEllipsisH, faPlus } from '@fortawesome/free-solid-svg-icons';
-import Modal from 'react-native-modal';
-import AppContext from '../react-helpers/appContext';
-import List, { listColors } from '../logic/list';
+import { observer } from 'mobx-react-lite';
 
-interface Props {
-  isOpen: boolean,
-  onEditList: (list: List) => void,
-  hide: () => void
-}
 
-const ListSelectModal = ({ isOpen, onEditList, hide }: Props) => {
+const ListSelectModal = () => {
   const app = useContext(AppContext);
+  const modalsHandler = useContext(ModalsContext);
+
+  function hide() {
+    modalsHandler.setShowListsModal(false);
+  }
 
   function handleSelectList(list: List) {
     hide();
@@ -22,13 +24,13 @@ const ListSelectModal = ({ isOpen, onEditList, hide }: Props) => {
   }
 
   function handleEditList(list: List) {
-    onEditList(list);
+    modalsHandler.setListBeingEdited(list);
     hide();
   }
 
   return (
     <Modal
-      isVisible={isOpen}
+      isVisible={modalsHandler.showListsModal}
       onDismiss={hide}
       onBackdropPress={hide}
       onSwipeComplete={hide}
@@ -67,7 +69,6 @@ const ListSelectModal = ({ isOpen, onEditList, hide }: Props) => {
             </Text>
           </TouchableOpacity>
         </View>
-
       </View>
     </Modal>
   )
@@ -119,4 +120,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default ListSelectModal;
+export default observer(ListSelectModal);

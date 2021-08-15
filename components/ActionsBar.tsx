@@ -5,40 +5,22 @@ import { useContext } from 'react';
 import { Dimensions, Keyboard, KeyboardAvoidingView, LayoutAnimation, Platform, StyleSheet, TextInput, TouchableOpacity, View } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faList, faPlus } from '@fortawesome/free-solid-svg-icons';
-import ListSelectModal from './ListSelectModal';
-import List from '../logic/list';
-import ListEditorModal from './ListEditorModal';
-import ListDeleteModal from './ListDeleteModal';
+import ModalsContext from '../react-helpers/modalsContext';
 
 const ActionsBar = () => {
-  const [showListsModal, setShowListsModal] = useState(false);
-  const [listBeingEdited, setListBeingEdited] = useState<null | List>(null);
-  const [listBeingDeleted, setListBeingDeleted] = useState<null | List>(null);
+  const modalsHandler = useContext(ModalsContext);
 
   return (
-    <>
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        style={styles.actionsBarContainer}>
-        <TouchableOpacity onPress={() => setShowListsModal(true)}>
-          <View style={styles.circularButton}>
-            <FontAwesomeIcon icon={faList} color="gray" />
-          </View>
-        </TouchableOpacity>
-        <NewTaskSection />
-      </KeyboardAvoidingView>
-      <ListSelectModal
-        isOpen={showListsModal}
-        onEditList={list => setListBeingEdited(list)}
-        hide={() => setShowListsModal(false)}
-      />
-      <ListEditorModal
-        listBeingEdited={listBeingEdited}
-        onListDeleteAttempt={list => setListBeingDeleted(list)}
-        hide={() => setListBeingEdited(null)}
-      />
-      <ListDeleteModal listBeingDeleted={listBeingDeleted} hide={() => setListBeingDeleted(null)} />
-    </>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={styles.actionsBarContainer}>
+      <TouchableOpacity onPress={() => modalsHandler.setShowListsModal(true)}>
+        <View style={styles.circularButton}>
+          <FontAwesomeIcon icon={faList} color="gray" />
+        </View>
+      </TouchableOpacity>
+      <NewTaskSection />
+    </KeyboardAvoidingView>
   )
 }
 

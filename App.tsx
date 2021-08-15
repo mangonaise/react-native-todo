@@ -6,6 +6,9 @@ import ActionsBar from './components/ActionsBar';
 import TasksContainer from './components/TasksContainer';
 import AppInstance from './logic/appInstance';
 import AppContext from './react-helpers/appContext';
+import ModalsContainer from './components/ModalsContainer';
+import ModalsHandler from './logic/modalsHandler';
+import ModalsContext from './react-helpers/modalsContext';
 
 LogBox.ignoreLogs([
   'ReactNativeFiberHostComponent: Calling getNode() on the ref of an Animated component is no longer necessary. You can now directly use the ref instead. This method will be removed in a future release.',
@@ -18,14 +21,18 @@ if (Platform.OS === 'android') {
 }
 
 const appInstance = new AppInstance();
+const modalsHandlerInstance = new ModalsHandler();
 
 export default function App() {
   return (
     <AppContext.Provider value={appInstance}>
-      <View style={styles.container}>
-        <TasksContainer />
-        <ActionsBar />
-      </View>
+      <ModalsContext.Provider value={modalsHandlerInstance}>
+        <View style={styles.container}>
+          <TasksContainer />
+          <ActionsBar />
+          <ModalsContainer />
+        </View>
+      </ModalsContext.Provider>
     </AppContext.Provider>
   );
 }

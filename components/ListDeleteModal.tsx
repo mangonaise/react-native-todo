@@ -1,18 +1,24 @@
 import React from 'react';
-import { Keyboard, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Modal from 'react-native-modal';
-import List, { listColors } from '../logic/list';
-import { useContext } from 'react';
 import AppContext from '../react-helpers/appContext';
+import ModalsContext from '../react-helpers/modalsContext';
+import { observer } from 'mobx-react-lite';
+import { Keyboard, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { useState } from 'react';
+import { useEffect } from 'react';
+import { useContext } from 'react';
 
-interface Props {
-  listBeingDeleted: List | null,
-  hide: () => void
-}
 
-const ListDeleteModal = ({ listBeingDeleted, hide }: Props) => {
+const ListDeleteModal = () => {
   const app = useContext(AppContext);
-  const listTasksCount = listBeingDeleted?.tasks.length;
+  const modalsHandler = useContext(ModalsContext);
+  const listBeingDeleted = modalsHandler.listBeingDeleted
+  const [listName, setListName] = useState(listBeingDeleted?.name);
+  const [listTasksCount, setListTasksCount] = useState(listBeingDeleted?.tasks.length ?? 0);
+
+  function hide() {
+    modalsHandler.setListBeingDeleted(null);
+  }
 
   function handleCancel() {
     Keyboard.dismiss();
@@ -23,6 +29,13 @@ const ListDeleteModal = ({ listBeingDeleted, hide }: Props) => {
     app.deleteList(listBeingDeleted!);
     hide();
   }
+
+  useEffect(() => {
+    if (modalsHandler.listBeingDeleted) {
+      setListName(modalsHandler.listBeingDeleted.name);
+      setListTasksCount(modalsHandler.listBeingDeleted.tasks.length);      
+    }
+  }, [modalsHandler.listBeingDeleted]);
 
   return (
     <Modal
@@ -36,7 +49,7 @@ const ListDeleteModal = ({ listBeingDeleted, hide }: Props) => {
       style={styles.modal}>
       <View style={styles.container}>
         <Text style={styles.confirmationText}>
-          Delete <Text style={styles.listName}>{listBeingDeleted?.name}</Text>?
+          Delete <Text style={styles.listName}>{listName}</Text>?
         </Text>
         <View style={styles.taskWarningTextContainer}>
           <Text>
@@ -101,4 +114,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default ListDeleteModal;
+export default observer(ListDeleteModal);
