@@ -15,9 +15,11 @@ interface Props {
 
 const ListEditorModal = ({ listBeingEdited, hide }: Props) => {
   const [listName, setListName] = useState('');
+  const [listColorId, setListColorId] = useState(listBeingEdited?.colorId ?? 0);
 
   function saveList() {
     listBeingEdited!.renameList(listName);
+    listBeingEdited!.setColorId(listColorId);
     Keyboard.dismiss();
     hide();
   }
@@ -25,10 +27,6 @@ const ListEditorModal = ({ listBeingEdited, hide }: Props) => {
   function handleCancel() {
     Keyboard.dismiss();
     hide();
-  }
-
-  function handleSelectColor(colorId: number) {
-    listBeingEdited!.setColorId(colorId);
   }
 
   useEffect(() => {
@@ -50,7 +48,10 @@ const ListEditorModal = ({ listBeingEdited, hide }: Props) => {
           onChangeText={setListName}
           style={styles.input}
         />
-        <ColorSelector initialColorId={listBeingEdited?.colorId ?? 0} onSelectColor={handleSelectColor} />
+        <ColorSelector
+          initialColorId={listBeingEdited?.colorId ?? 0}
+          onChangeColor={colorId => setListColorId(colorId)}
+        />
         <View style={styles.buttonsContainer}>
           <TouchableOpacity style={styles.button} onPress={handleCancel}>
             <Text style={[styles.buttonText, { color: '#878787' }]}>Cancel</Text>
@@ -69,15 +70,15 @@ const ListEditorModal = ({ listBeingEdited, hide }: Props) => {
 
 interface ColorSelectorProps {
   initialColorId: number,
-  onSelectColor: (colorId: number) => void
+  onChangeColor: (colorId: number) => void
 }
 
-const ColorSelector = ({ initialColorId, onSelectColor }: ColorSelectorProps) => {
+const ColorSelector = ({ initialColorId, onChangeColor }: ColorSelectorProps) => {
   const [selectedColorId, setSelectedColorId] = useState<number>(initialColorId);
 
   function handleSelectColorId(colorId: number) {
     setSelectedColorId(colorId);
-    onSelectColor(colorId);
+    onChangeColor(colorId);
   }
 
   return (

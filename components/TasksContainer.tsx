@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   sectionTitle: {
-    marginLeft: 10,
+    marginLeft: 20,
     fontSize: 24,
     fontWeight: 'bold',
     color: 'black'
