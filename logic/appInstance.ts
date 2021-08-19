@@ -30,9 +30,9 @@ export default class AppInstance {
 
   public setActiveList(list: List) {
     this.activeList = list;
-    this.taskBeingEdited = null;
-    this.refreshActiveListColor();
+    this.setTaskBeingEdited(null);
     this.setShowCompletedTasks(false);
+    this.refreshActiveListColor();
   }
 
   public setTaskBeingEdited(task: Task | null) {
@@ -41,6 +41,7 @@ export default class AppInstance {
 
   public setShowCompletedTasks(value: boolean) {
     this.showCompletedTasks = value;
+    this.setTaskBeingEdited(null);
   }
 
   public refreshActiveListColor() {
