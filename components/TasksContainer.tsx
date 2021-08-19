@@ -71,7 +71,7 @@ const renderCompletedTask = ({ item }: RenderItemParams<ListItem>) => {
 const styles = StyleSheet.create({
   tasksContainer: {
     flex: 1,
-    paddingTop: 25,
+    paddingTop: 15,
     height: '100%'
   },
   titleContainer: {
