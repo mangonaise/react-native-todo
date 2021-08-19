@@ -6,6 +6,7 @@ import { Dimensions, Keyboard, KeyboardAvoidingView, LayoutAnimation, Platform, 
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faList, faPlus } from '@fortawesome/free-solid-svg-icons';
 import ModalsContext from '../react-helpers/modalsContext';
+import { observer } from 'mobx-react-lite';
 
 const ActionsBar = () => {
   const modalsHandler = useContext(ModalsContext);
@@ -24,7 +25,7 @@ const ActionsBar = () => {
   )
 }
 
-const NewTaskSection = () => {
+const NewTaskSection = observer(() => {
   const app = useContext(AppContext);
   const [taskText, setTaskText] = useState('');
 
@@ -47,13 +48,18 @@ const NewTaskSection = () => {
         value={taskText}
         onChangeText={setTaskText} />
       <TouchableOpacity onPress={addTask} disabled={taskText === ''}>
-        <View style={[styles.circularButton, styles.addTaskButton, taskText === '' && styles.disabled]}>
+        <View style={[
+          styles.circularButton,
+          styles.addTaskButton,
+          taskText === '' && styles.disabled,
+          { backgroundColor: app.activeListColor }
+        ]}>
           <FontAwesomeIcon icon={faPlus} color="white" style={styles.addTaskIcon} />
         </View>
       </TouchableOpacity>
     </View>
   )
-}
+})
 
 const styles = StyleSheet.create({
   actionsBarContainer: {
@@ -90,16 +96,14 @@ const styles = StyleSheet.create({
   },
   addTaskButton: {
     borderTopLeftRadius: 0,
-    borderBottomLeftRadius: 0,
-    backgroundColor: '#8197d4',
+    borderBottomLeftRadius: 0
   },
   addTaskIcon: {
     position: 'relative',
     right: 1
   },
   disabled: {
-    opacity: 0.5,
-    backgroundColor: 'gray'
+    opacity: 0.4,
   }
 });
 
