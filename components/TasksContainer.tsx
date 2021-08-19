@@ -10,6 +10,8 @@ import Task from './Task';
 import TaskInstance from '../logic/task';
 import DraggableFlatList, { RenderItemParams } from 'react-native-draggable-flatlist';
 import AppContext from '../react-helpers/appContext';
+import CompletedTask from './CompletedTask';
+import TaskVisibilitySelector from './TaskVisibilitySelector';
 
 type ListItem = {
   key: string;
@@ -18,13 +20,15 @@ type ListItem = {
 
 function TasksContainer() {
   const app = useContext(AppContext);
+  const showCompleted = app.showCompletedTasks;
 
-  const data = app.activeList.tasks
-    .filter(task => !task.isComplete)
+  let data = (showCompleted ? app.activeList.completedTasks : app.activeList.tasks)
     .map(task => ({
       key: task.id,
       task
     } as ListItem));
+
+  let renderItem = showCompleted ? renderCompletedTask : renderTask;
 
   function cancelTaskEdit() {
     prepareLayoutAnimation();
@@ -40,6 +44,7 @@ function TasksContainer() {
           {app.activeList.name}
         </Text>
       </View>
+      <TaskVisibilitySelector />
       <DraggableFlatList
         data={data}
         renderItem={renderItem}
@@ -51,10 +56,16 @@ function TasksContainer() {
   );
 }
 
-const renderItem = ({ item, index, drag, isActive }: RenderItemParams<ListItem>) => {
+const renderTask = ({ item, index, drag, isActive }: RenderItemParams<ListItem>) => {
   return (
     <Task task={item.task} isDragging={isActive} onDrag={drag} />
   );
+}
+
+const renderCompletedTask = ({ item }: RenderItemParams<ListItem>) => {
+  return (
+    <CompletedTask task={item.task} />
+  )
 }
 
 const styles = StyleSheet.create({
@@ -67,7 +78,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     paddingHorizontal: 25,
-    marginBottom: 20,
+    marginBottom: 15,
   },
   sectionTitle: {
     marginHorizontal: 20,

@@ -6,6 +6,7 @@ export default class AppInstance {
   lists: List[];
   activeList: List;
   taskBeingEdited = null as Task | null;
+  showCompletedTasks = false;
 
   constructor() {
     this.lists = [new List('Your tasks')];
@@ -21,15 +22,21 @@ export default class AppInstance {
     this.lists = this.lists.filter(list => list !== listToDelete);
     if (listToDelete === this.activeList) {
       this.setActiveList(this.lists[0]);
+      this.setShowCompletedTasks(false);
     }
   }
 
   public setActiveList(list: List) {
     this.activeList = list;
     this.taskBeingEdited = null;
+    this.setShowCompletedTasks(false);
   }
 
   public setTaskBeingEdited(task: Task | null) {
     this.taskBeingEdited = task;
+  }
+
+  public setShowCompletedTasks(value: boolean) {
+    this.showCompletedTasks = value;
   }
 }

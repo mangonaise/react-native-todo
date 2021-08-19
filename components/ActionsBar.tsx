@@ -35,6 +35,7 @@ const NewTaskSection = () => {
       LayoutAnimation.Properties.opacity));
     Keyboard.dismiss();
     app.activeList.addTask(taskText);
+    app.setShowCompletedTasks(false);
     setTaskText('');
   }
 

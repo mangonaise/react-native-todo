@@ -14,6 +14,7 @@ export const listColors = [
 export default class List {
   name: string;
   tasks = [] as Task[];
+  completedTasks = [] as Task[];
   colorId: number;
 
   constructor(name: string) {
@@ -33,6 +34,16 @@ export default class List {
 
   public deleteTask(taskToDelete: Task) {
     this.tasks = this.tasks.filter(task => task !== taskToDelete);
+  }
+
+  public setTaskAsComplete(task: Task) {
+    this.deleteTask(task);
+    this.completedTasks.unshift(task);
+  }
+
+  public setTaskAsIncomplete(taskToRestore: Task) {
+    this.completedTasks = this.completedTasks.filter(task => task !== taskToRestore);
+    this.tasks.unshift(taskToRestore);
   }
 
   public setTasks(newData: Task[]) {

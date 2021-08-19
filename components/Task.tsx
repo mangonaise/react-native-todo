@@ -26,7 +26,7 @@ const Task = ({ task, onDrag, isDragging }: Props) => {
 
   function handleComplete() {
     prepareLayoutAnimation();
-    task.setComplete(true);
+    app.activeList.setTaskAsComplete(task);
   }
 
   function handleDelete() {
