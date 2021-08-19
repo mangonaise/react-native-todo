@@ -45,15 +45,15 @@ const ListSelectModal = () => {
         {app.lists.map((list, index) => (
           <View key={index} style={styles.row}>
             <TouchableOpacity
-              style={styles.selectListButton}
               onPress={() => handleSelectList(list)}
+              style={styles.selectListButton}
               activeOpacity={0.3}>
               <FontAwesomeIcon icon={faCircle} color={listColors[list.colorId]} />
               <Text style={styles.listName}>{list.name}</Text>
             </TouchableOpacity>
             <TouchableOpacity
-              style={styles.editListButton}
-              onPress={() => handleEditList(list)}>
+              onPress={() => handleEditList(list)}
+              style={styles.editListButton}>
               <FontAwesomeIcon icon={faEllipsisH} color="#8a8a8a" />
             </TouchableOpacity>
           </View>
@@ -94,16 +94,17 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',
-    flexGrow: 1
+    flex: 1
   },
   listName: {
-    marginLeft: 15
+    marginLeft: 15,
+    flex: 1
   },
   editListButton: {
     backgroundColor: 'white',
     height: 50,
     paddingHorizontal: 15,
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
   createListButton: {
     height: 50,

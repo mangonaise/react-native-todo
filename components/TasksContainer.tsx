@@ -66,11 +66,11 @@ const styles = StyleSheet.create({
   titleContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingLeft: 25,
+    paddingHorizontal: 25,
     marginBottom: 20,
   },
   sectionTitle: {
-    marginLeft: 20,
+    marginHorizontal: 20,
     fontSize: 24,
     fontWeight: 'bold',
     color: '#3b3b3b'

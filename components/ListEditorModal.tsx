@@ -154,7 +154,8 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     paddingVertical: 5,
     borderBottomWidth: 1.5,
-    borderBottomColor: '#e0e0e0'
+    borderBottomColor: '#e0e0e0',
+    flex: 1
   },
   buttonsContainer: {
     flexDirection: 'row',
