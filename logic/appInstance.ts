@@ -1,16 +1,18 @@
 import { makeAutoObservable } from 'mobx';
-import List from './list';
+import List, { listColors } from './list';
 import Task from './task';
 
 export default class AppInstance {
   lists: List[];
   activeList: List;
+  activeListColor = '';
   taskBeingEdited = null as Task | null;
   showCompletedTasks = false;
 
   constructor() {
     this.lists = [new List('Your tasks')];
     this.activeList = this.lists[0];
+    this.refreshActiveListColor();
     makeAutoObservable(this);
   }
 
@@ -29,6 +31,7 @@ export default class AppInstance {
   public setActiveList(list: List) {
     this.activeList = list;
     this.taskBeingEdited = null;
+    this.refreshActiveListColor();
     this.setShowCompletedTasks(false);
   }
 
@@ -38,5 +41,9 @@ export default class AppInstance {
 
   public setShowCompletedTasks(value: boolean) {
     this.showCompletedTasks = value;
+  }
+
+  public refreshActiveListColor() {
+    this.activeListColor = listColors[this.activeList.colorId];
   }
 }

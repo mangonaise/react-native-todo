@@ -1,25 +1,24 @@
+import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useContext } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { listColors } from '../logic/list';
 import AppContext from '../react-helpers/appContext';
 
 const TaskVisibilitySelector = () => {
   const app = useContext(AppContext);
-  const listColor = listColors[app.activeList.colorId];
 
   return (
     <View style={styles.container}>
       <TouchableOpacity
         onPress={() => app.setShowCompletedTasks(false)}
-        style={[styles.button, styles.leftButton, !app.showCompletedTasks && { backgroundColor: listColor }]}>
+        style={[styles.button, styles.leftButton, !app.showCompletedTasks && { backgroundColor: app.activeListColor }]}>
         <Text style={!app.showCompletedTasks ? styles.selectedText : styles.buttonText}>
           Active
         </Text>
       </TouchableOpacity>
       <TouchableOpacity
         onPress={() => app.setShowCompletedTasks(true)}
-        style={[styles.button, styles.rightButton, app.showCompletedTasks && { backgroundColor: listColor }]}>
+        style={[styles.button, styles.rightButton, app.showCompletedTasks && { backgroundColor: app.activeListColor }]}>
         <Text style={app.showCompletedTasks ? styles.selectedText : styles.buttonText}>
           Completed
         </Text>
@@ -58,4 +57,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default TaskVisibilitySelector;
+export default observer(TaskVisibilitySelector);

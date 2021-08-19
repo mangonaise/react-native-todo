@@ -3,7 +3,6 @@ import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { useContext } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { listColors } from '../logic/list';
 import TaskInstance from '../logic/task';
 import AppContext from '../react-helpers/appContext';
 import prepareLayoutAnimation from '../react-helpers/prepareLayoutAnimation';
@@ -15,7 +14,6 @@ interface Props {
 
 const CompletedTask = ({ task }: Props) => {
   const app = useContext(AppContext);
-  const listColor = listColors[app.activeList.colorId];
 
   function restoreTask() {
     prepareLayoutAnimation();
@@ -25,7 +23,7 @@ const CompletedTask = ({ task }: Props) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={restoreTask} style={styles.restoreButton}>
-        <FontAwesomeIcon icon={faCheck} size={16} color={listColor} style={{ opacity: 0.8 }} />
+        <FontAwesomeIcon icon={faCheck} size={16} color={app.activeListColor} style={{ opacity: 0.8 }} />
       </TouchableOpacity>
       <Text style={styles.taskText}>
         {task.text}

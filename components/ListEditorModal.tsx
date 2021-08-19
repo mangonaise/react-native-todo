@@ -34,6 +34,7 @@ const ListEditorModal = () => {
       app.setActiveList(updatedList);
       isNewList.current = false;
     }
+    app.refreshActiveListColor();
     Keyboard.dismiss();
     hide();
   }
